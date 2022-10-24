@@ -10,18 +10,19 @@ namespace Lekerdezesek
     {
         static void Main(string[] args)
         {
-            int[] szamok = { 4, 5, 1, 2, 8, 9, 7, 3 };
+            string[] nevek = { "János", "Tamás", "Andi", "József", "Tündi", "Trixi", "Alajos" };
 
-            string[] nums = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+            var csoportok = from nev in nevek
+                      group nev by nev[0];
 
-            var kicsi = (from szam in szamok
-                        where szam >= 2 && szam <= 6
-                        orderby szam descending
-                        select nums[szam]).ToList();
-
-            foreach (var k in kicsi)
+            foreach (var csoport in csoportok.OrderBy(x => x.Key))
             {
-                Console.WriteLine(k);
+                Console.WriteLine(csoport.Key + $" ({csoport.Count()} db):");
+
+                foreach (var tag in csoport.OrderBy(x => x))
+                {
+                    Console.WriteLine("\t" + tag);
+                }
             }
 
             Console.ReadKey();
